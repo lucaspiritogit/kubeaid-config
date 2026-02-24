@@ -1,0 +1,114 @@
+# Git server specific details.
+#
+git:
+  caBundlePath:
+
+  # SSH username.
+  #
+  sshUsername: git
+
+  # Or, make KubeAid CLI use the SSH Agent.
+  # So, you (the one who runs KubeAid CLI) can use your YubiKey.
+  #
+  useSSHAgent: true
+
+  privateKeyFilePath: /Users/lpirito/.ssh/id_ed25519
+
+# KubeAid and KubeAid Config repository specific details.
+# The KubeAid and KubeAid Config repositories must be hosted in the same Git server.
+#
+forkURLs:
+  # KubeAid repository specific details.
+  #
+  kubeaid:
+    # KubeAid repository SSH URL.
+    #
+    url: git@github.com:Obmondo/KubeAid.git
+
+    # KubeAid tag.
+    #
+    version: 24.1.1
+
+  # KubeAid Config repository specific details.
+  #
+  kubeaidConfig:
+    # KubeAid Config repository SSH URL.
+    #
+    url: git@github.com:lucaspiritogit/kubeaid-config.git
+
+    # Name of the directory inside your KubeAid Config repository's k8s folder, where the KubeAid
+    # Config files for this cluster will be contained.
+    #
+    # When not specified, the directory name will default to the cluster name.
+    #
+    # So, suppose your cluster name is 'staging'. Then, the directory name will default to
+    # 'staging'. Or you can customize it to something like 'staging.qa'.
+    #
+    directory:
+
+# Kubernetes specific details.
+#
+cluster:
+  # Name of the Kubernetes cluster.
+  #
+  # We don't allow using dots in the cluster name, since it can cause issues with tools like
+  # ClusterAPI and Cilium : which use the cluster name to generate other configurations.
+  #
+  name: lpirito
+
+  # Kubernetes version (>= 1.30.0).
+  #
+  k8sVersion: 1.35.0
+
+  # Whether you would like to enable Kubernetes Audit Logging out of the box.
+  # Suitable Kubernetes API configurations will be done for you automatically. And they can be
+  # changed using the apiSever struct field.
+  #
+  enableAuditLogging: false
+
+  # Configuration options for the Kubernetes API server.
+  #
+  apiServer:
+    extraArgs:
+
+    extraVolumes:
+
+    files:
+
+  # Other than the root user, addtional users that you would like to be created in each node.
+  # NOTE : Currently, we can't register additional SSH key-pairs against the root user.
+  #
+  additionalUsers:
+
+  argoCD:
+    deployKeys:
+      kubeaidConfig:
+        privateKeyFilePath: /Users/lpirito/.ssh/kubeaid-deploy-kubeaid-config
+
+      kubeaid:
+        privateKeyFilePath: /Users/lpirito/.ssh/kubeaid
+
+# Cloud provider specific details.
+#
+cloud:
+  local: {}
+
+  disasterRecovery:
+    veleroBackupsBucketName: backup
+
+    sealedSecretsBackupsBucketName: backup
+
+# Kube Prometheus installation specific details.
+#
+kubePrometheus:
+  version:
+
+  grafanaURL:
+
+# Obmondo customer specific details.
+#
+obmondo:
+  customerID: 1234
+
+  monitoring:
+
