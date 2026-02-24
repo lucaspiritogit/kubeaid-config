@@ -10,7 +10,7 @@ git:
   # Or, make KubeAid CLI use the SSH Agent.
   # So, you (the one who runs KubeAid CLI) can use your YubiKey.
   #
-  useSSHAgent: true
+  useSSHAgent: false
 
   privateKeyFilePath: /Users/lpirito/.ssh/id_ed25519
 
