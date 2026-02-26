@@ -93,11 +93,6 @@ cluster:
 cloud:
   local: {}
 
-  disasterRecovery:
-    veleroBackupsBucketName: backup
-
-    sealedSecretsBackupsBucketName: backup
-
 # Kube Prometheus installation specific details.
 #
 kubePrometheus:
