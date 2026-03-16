@@ -12,7 +12,7 @@ git:
   #
   useSSHAgent: false
 
-  privateKeyFilePath: /Users/lpirito/.ssh/id_ed25519
+  privateKeyFilePath: /home/lucaspirito/.ssh/id_ed25519
 
 # KubeAid and KubeAid Config repository specific details.
 # The KubeAid and KubeAid Config repositories must be hosted in the same Git server.
@@ -83,10 +83,10 @@ cluster:
   argoCD:
     deployKeys:
       kubeaidConfig:
-        privateKeyFilePath: /Users/lpirito/.ssh/kubeaid-deploy-kubeaid-config
+        privateKeyFilePath: /home/lucaspirito/.ssh/id_ed25519
 
       kubeaid:
-        privateKeyFilePath: /Users/lpirito/.ssh/kubeaid
+        privateKeyFilePath: /home/lucaspirito/.ssh/id_ed25519
 
 # Cloud provider specific details.
 #
