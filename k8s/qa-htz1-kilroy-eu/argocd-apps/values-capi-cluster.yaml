@@ -38,7 +38,7 @@ hetzner:
 
     
     endpoint:
-      host: <nil>
+      host: 10.0.0.2
 
     
     hcloud: 
