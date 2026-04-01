@@ -1,0 +1,75 @@
+git:
+  privateKeyFilePath: /Users/lpirito/.ssh/id_ed25519_obmondo
+
+forkURLs:
+  kubeaid:
+    url: https://github.com/Archisman-Mridha/KubeAid
+    version: HEAD
+  kubeaidConfig:
+    url: git@github.com:lucaspiritogit/kubeaid-config.git
+
+cluster:
+  name: qa-htz1-kilroy-eu
+  k8sVersion: v1.33.0
+  argoCD:
+    deployKeys:
+      kubeaid:
+        privateKeyFilePath: /Users/lpirito/.ssh/id_ed25519_obmondo
+      kubeaidConfig:
+        privateKeyFilePath: /Users/lpirito/.ssh/id_ed25519_obmondo
+
+cloud:
+  hetzner:
+    mode: hybrid
+
+    sshKeyPair:
+      name: cluster-bootstrapper
+      publicKeyFilePath: ./outputs/ssh/rsa/openssh/.pub
+      privateKeyFilePath: ./outputs/ssh/rsa/openssh/.key
+
+    hcloudVPNCluster:
+      name: vpn
+
+    hcloud:
+      zone: eu-central
+      imageName: ubuntu-24.04
+
+      hetznerNetwork:
+        cidr: 10.0.0.0/16
+        hcloudServersSubnetCIDR: 10.0.0.0/24
+
+    bareMetal:
+      # wipeDisks: True
+      vSwitch:
+        name: qa-htz1-kilroy-eu
+        vlanID: 4000
+        subnetCIDRBlock: 10.0.1.0/24
+
+    controlPlane:
+      regions:
+        - hel1
+
+      hcloud:
+        machineType: cax11
+        replicas: 1
+        loadBalancer:
+          enabled: true
+          region: hel1
+
+    nodeGroups:
+      bareMetal:
+        - name: general
+          labels:
+            node-role.kubernetes.io/general: ""
+            node.cluster.x-k8s.io/nodegroup: general
+          taints: []
+          bareMetalHosts:
+            - serverID: "2836489" # 116.202.170.35
+              privateIP: "10.0.1.2"
+            # - serverID: "2836490" # 116.202.170.31
+            #   privateIP: "10.0.1.3"
+            # - serverID: "2836504" # 116.202.170.33
+            #   privateIP: "10.0.1.4"
+
+kubePrometheus:
+  version: v0.17.0

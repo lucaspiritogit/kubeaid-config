@@ -1,0 +1,66 @@
+global:
+  clusterName: qa-htz1-kilroy-eu
+  kubernetes:
+    version: v1.33.0
+  kubeaid:
+    repo: https://github.com/Archisman-Mridha/KubeAid
+  kubeaidConfig:
+    repo: git@github.com:lucaspiritogit/kubeaid-config.git
+  additionalUsers: 
+    []
+provider:
+  hetzner: true
+
+hetzner:
+  mode: hybrid
+
+  sshKeyPair:
+    name: cluster-bootstrapper
+  hcloud: 
+    zone: eu-central
+    imageName: ubuntu-24.04
+    hetznerNetwork:
+      cidr: 10.0.0.0/16
+      hcloudServersSubnetCIDR: 10.0.0.0/24
+  bareMetal:
+    wipeDisks: false
+    installImage:
+      imagePath: /root/.oldroot/nfs/images/Ubuntu-2404-noble-amd64-base.tar.gz
+      vg0:
+        size: 80
+        rootVolumeSize: 50
+    vSwitch:
+      vlanID: 4000
+
+  controlPlane:
+    regions: 
+      - hel1
+
+    
+    endpoint:
+      host: 10.0.0.2
+
+    
+    hcloud: 
+      machineType: cax11
+      replicas: 1
+      loadBalancer:
+        enabled: true
+        region: hel1
+
+  nodeGroups: 
+    hcloud: []
+    bareMetal:
+      - name: general
+        labels:
+          node-role.kubernetes.io/general: ""
+          node.cluster.x-k8s.io/nodegroup: general
+        taints: []
+        bareMetalHosts:
+          - serverID: "2836489"
+            privateIP: 10.0.1.2
+            wwns:
+              - eui.002538bb31c60104
+              - eui.002538bb31c600e5
+        zfs:
+          size: 220
